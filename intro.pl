@@ -117,4 +117,59 @@ print $data{0};   # "blue"
 print $data{"0"}; # "blue
 print "\n";
 
-# Lists - not a variable
+# Lists - are not variables, but a DS you use to create arrays and hash variables
+# uses the () syntax as we have seen before, but important thing to remember is
+# that they can't be nested
+my @array = (
+	"apples",
+	"bananas",
+	(
+		"inner",
+		"list",
+		"several",
+		"entries",
+	),
+	"cherries",
+);
+# an array like this would simply be flattened
+print "@array";
+
+print "\n";
+# this could result in unexpected behavior in the case of hash:
+my %hash = (
+	"beer" => "good",
+	"bananas" => (
+		"green"  => "wait",
+		"yellow" => "eat",
+	),
+);
+print $hash{"wait"};
+print "\n";
+
+# the side benefit of this is the ease of concatenating arrays
+my @prog_languages = ("python", "swift", "perl");
+my @foreign_languages = ("russian", "japanese");
+my @languages = (@prog_languages, @foreign_languages, "korean");
+print "@languages";
+print "\n";
+
+
+## Context - either a scalar or list context
+my @item = "keyboard";  # silently conversion to a array with single element
+print "@item";
+print "\n";
+
+# The concept of the context explains the behavior we got at line 88, when a
+# string in concatenated, the array is silently coverted into a scalar, or the
+# length of the array. Here is another example:
+my $scalar_languages = @prog_languages;
+print $scalar_languages; # "3"
+print "\n";
+
+# the workaround for the scalar conversion is to use a ',' with print function
+print $scalar_languages, "\n";
+
+# forcing expession context to be scalar
+print scalar reverse "hello perl";
+
+## References

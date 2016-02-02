@@ -171,5 +171,18 @@ print $scalar_languages, "\n";
 
 # forcing expession context to be scalar
 print scalar reverse "hello perl";
+print "\n";
 
 ## References
+# scalar variable can contain reference to any variable
+my $color = "Indigo";
+my $scalarRef = \$color;
+print $scalarRef;
+print "\n";
+print ${ $scalarRef } . "\n";    # kind of like dereferencing a pointer
+# alternative syntax: $$scalarRef
+
+# if reference points to an array or hash, the data can be accessed by:
+my @colors = ("red", "blue", "green", "orange");
+my $arrayRef = \@colors;
+print $arrayRef->[0];     # for hash: $hashRef->{"key"};

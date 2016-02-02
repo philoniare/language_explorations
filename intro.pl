@@ -180,9 +180,57 @@ my $scalarRef = \$color;
 print $scalarRef;
 print "\n";
 print ${ $scalarRef } . "\n";    # kind of like dereferencing a pointer
-# alternative syntax: $$scalarRef
+# alternative syntax: $$scalarRef, for arrays: @$arrayRef
 
 # if reference points to an array or hash, the data can be accessed by:
 my @colors = ("red", "blue", "green", "orange");
 my $arrayRef = \@colors;
 print $arrayRef->[0];     # for hash: $hashRef->{"key"};
+print "\n";
+
+## More complex data structures:
+# generally since complex types like arrays and hash can't be nested, we can
+# use references whenever a scalar variable is needed
+# Here's the example from the guide:
+my %owner1 = (
+	"name" => "Santa Claus",
+	"DOB"  => "1882-12-25",      # Santa is turning 134 years old this year
+);
+
+my %owner2 = (
+	"name" => "Mickey Mouse",
+	"DOB"  => "1928-11-18",
+);
+
+my @owners = ( \%owner1, \%owner2 );
+
+my %account = (
+	"number" => "12345678",
+	"opened" => "2000-01-01",
+	"owners" => \@owners,
+);
+
+print $account{"owners"}->[0]{"name"}, "\n";    # getting the first owner's name
+
+# Can simplify the flow with anynomous arrays('[]') and hashes ('{}')
+my %account = (
+	"number" => "31415926",
+	"opened" => "3000-01-01",
+	"owners" => [
+		{
+			"name" => "Philip Fry",
+			"DOB"  => "1974-08-06",
+		},
+		{
+			"name" => "Hubert Farnsworth",
+			"DOB"  => "2841-04-09",
+		},
+	],
+);
+
+# Accessing the elements
+print "Account #", $account{"number"}, "\n";
+print "Opened on ", $account{"opened"}, "\n";
+print "Joint owners of the account:\n";
+print "\t", $account{"owners"}->[0]->{"name"}, "\n";
+print "\t", $account{"owners"}->[1]->{"name"}, "\n";

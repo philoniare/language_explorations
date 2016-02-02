@@ -77,13 +77,44 @@ print "last populated index is " . $#firstArray . "\n";
 print "@firstArray" . "\n";  # joins elements with a space
 # this could also be dangerous like in the case of an email
 # bob@gmail.com -> the perl would look for an array @gmail => needs to be escaped
+# with either \ or ''
 
 my $string = "array magic";
 print "printing var string: $string \n";
-print "printing a string: \$string \n";
+print "printing a string: \$string \n";     # alternative syntax: '@array'
 
 print @firstArray ;    # prints out elements without any space
 print "\n";
 print @firstArray . "\n";    # concatinating a newline char results in 4?
 # why would it do that? I'll have to look under the hood later cause this could
 # result in some nasty bugs
+
+
+## Hash variables
+my %fav_languages = (
+  "python" => 1995,
+  "swift"  => 2014,
+  "haskell" => 1990
+);
+# accessing hash value
+print $fav_languages{"python"};
+print %fav_languages{"swift"};  # interesting, returns both key and value
+print "\n";
+# converting a hash into array:
+my @fav_languages_arr = %fav_languages;
+print "@fav_languages_arr \n";       # no specific order to it
+
+## Recap: [] refers to arrays, {} refers to hash
+
+my $data = "orange";
+my @data = ("purple");
+my %data = ( "0" => "blue");
+
+print $data;      # "orange"
+print $data[0];   # "purple"
+print $data["0"]; # "purple"
+print $data{0};   # "blue"
+print $data{"0"}; # "blue
+print "\n";
+
+# Lists - not a variable

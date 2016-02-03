@@ -320,5 +320,71 @@ print "\n";
 # to really sort the numbers, we can chain methods:
 print join ", ", sort { $a <=> $b } @not_so_random_numbers;
 # a more complex comparator can also be supplied with sub {}
+print "\n";
 
-## Functions or subroutines
+## Functions or subroutines - calls by reference
+sub hyphenate {
+  my $word = shift @_;  # get the first parameter
+  $word = join "-", map {substr $word, $_, 1}(0..(length $word)-1);
+  return $word;
+}
+print hyphenate("dusk");
+
+sub new_line {
+  print "\n";
+}
+new_line;   # needed it for a while
+
+## Unpacking subroutine arguments
+# Unpacking in one-go:
+sub left_pad {
+  my ($oldString, $width, $padChar) = @_;
+  my $newString = ($padChar x ($width - length $oldString)) . $oldString;
+  return $newString;
+}
+print left_pad("lefty", 10, ">");
+new_line;
+
+# Providing key value pairs in parameter
+sub right_pad {
+  my %args = @_;
+  my $newString = $args{"oldString"}. ($args{"padChar"} x ($args{"width"} - length $args{"oldString"}));
+}
+print right_pad("oldString" => "righty", "padChar" => "<", "width" => 10);
+new_line;
+
+# exit <- like a return from the main function in C
+# running a system command and capturing output
+my $directory_listing = `ls`;
+print $directory_listing;
+
+# I'll skip file IO for now
+
+## Regular expressions:
+my $string = "Hello world";
+if (my @matches = $string =~ m/(\w+)\s+(\w+)/) {    # matches (word space word)
+  print "matches the regex";
+  new_line;
+  print "submatch 1: ", $1;
+  new_line;
+  print "submatch 2: ", $2;
+  new_line;
+  print "matches: ", join ", ", map { $_ } @matches;
+}
+new_line;
+
+# Regex substitution:
+$string = "Good morning world";
+$string =~ s/morning/evening/;
+print $string;
+new_line;
+
+# m//g finds one match after another:
+my $string = "a tonne of feathers or a tonne of bricks";
+while($string =~ m/(\w+)/g) {
+  print "'".$1."'\n";
+}
+
+# s///g global match & replace, as well as returns the number of matches
+# /i - case sensitive
+# /x - allows for whitespace and comments

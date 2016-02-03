@@ -213,7 +213,7 @@ my %account = (
 print $account{"owners"}->[0]{"name"}, "\n";    # getting the first owner's name
 
 # Can simplify the flow with anynomous arrays('[]') and hashes ('{}')
-my %account = (
+%account = (
 	"number" => "31415926",
 	"opened" => "3000-01-01",
 	"owners" => [
@@ -234,3 +234,53 @@ print "Opened on ", $account{"opened"}, "\n";
 print "Joint owners of the account:\n";
 print "\t", $account{"owners"}->[0]->{"name"}, "\n";
 print "\t", $account{"owners"}->[1]->{"name"}, "\n";
+
+
+## Conditionals:
+# basic syntax - if ... elsif ... else ...
+# possible short syntax
+my $word = "long string";
+print "'", $word, "' is actually long.", "\n" if (length $word) >= 10;
+
+# also has unless ... else ... similar to ruby syntax
+my $dead = 0;
+print "Time to code", "\n" unless $dead == 1;
+
+# Ternary operator (can be nested):
+my $speed = 70;
+my $speed_limit = 50;
+print "You are ", ($speed >= $speed_limit ? "over " : "under "),
+  "the speed limit.\n";
+
+## Loops
+# The conventional while loop:
+@array = ("sports", "entertainment");
+my $i = 0;
+while($i < scalar @array) {   # scalar returns the length
+  print $i, ": ", $array[$i], "\n";
+  $i++;
+}
+
+# until loop, looks like ruby was influenced quite a bit by perl
+# until($i >= scalar @array), self-explanatory
+# do {statement} while(cond);
+# the do loop executes at least once, therefore displays warning if array is empty
+# and the classic for loop:
+# for (my $i = 0; $i < scalar @array; $i++)
+# but for iterating over an array or hash, foreach loop is better
+foreach my $string (@array) {
+  print $string, "\n";
+}
+# specific range can also be indicated:
+  # foreach my $i (0 .. $#array) {
+  #  print $array[$i], "\n";
+  # }
+# note that .. is inclusive
+
+# sort alphabetically sorts the keys
+foreach my $key (sort keys %fav_languages) {
+	print $key, ": ", $fav_languages{$key}, "\n";
+}
+
+# shorter syntax: print $_ foreach @array;
+# in perl continue and break are next and last

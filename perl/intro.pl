@@ -2,7 +2,7 @@
 # Author: philoniare
 # Last Updated: 1/31/2016
 
-## I needed to learn some perl to make an IA for DuckDuckGo
+## Motivation: I needed to learn some perl to make an IA for DuckDuckGo
 
 ## Some background on perl:
 # Perl is the father of scripting languages, first designed by Larry Wall
@@ -20,6 +20,7 @@
 # Code Contest. Here's an example: http://www.ioccc.org/2014/birken/prog.c
 
 ## Install perl at: https://www.perl.org/get.html
+## Official documentation: http://perldoc.perl.org/
 #! Comments are simular to py
 
 use strict;             # looks like js got the statement from here...
@@ -284,3 +285,40 @@ foreach my $key (sort keys %fav_languages) {
 
 # shorter syntax: print $_ foreach @array;
 # in perl continue and break are next and last
+
+## Array Functions
+my @stack = ("Fred", "Eileen", "Denise", "Charlie");
+print "@stack", "\n";
+print "Last element: ", pop @stack, "\n";   # removes and returns final element
+push @stack, "Bob", "Alice";  # same syntax as other scripting languages
+print "@stack", "\n";
+print shift @stack, "\n";   # removes and returns first element
+unshift @stack, "Hank";   # removes and returns first element
+print "@stack";
+print "\n";
+# print splice(@stack, 1, 3, "<<<", ">>>"), "\n";
+# print "@stack";
+
+# Other functions:
+print join(", ", @stack), "\n";
+print reverse("Hello", "World"), "\n";
+print scalar reverse ("Hello", "World"), "\n";
+
+# map also does what is expected:
+print join ", ", map {uc $_ } @stack, "\n";
+# applies function uc to all elements of @stack
+
+# grep is the same as filter in py
+print join ", ", grep { length $_ > 5 } @stack;
+print "\n";
+
+# the default sort seems to be sorting numbers in alphabetical order:
+my @not_so_random_numbers = (10, 11, 7, 9, 1, 100);
+print join ", ", sort @not_so_random_numbers;
+print "\n";
+
+# to really sort the numbers, we can chain methods:
+print join ", ", sort { $a <=> $b } @not_so_random_numbers;
+# a more complex comparator can also be supplied with sub {}
+
+## Functions or subroutines

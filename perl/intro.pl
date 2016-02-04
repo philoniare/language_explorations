@@ -361,7 +361,7 @@ print $directory_listing;
 # I'll skip file IO for now
 
 ## Regular expressions:
-my $string = "Hello world";
+$string = "Hello world";
 if (my @matches = $string =~ m/(\w+)\s+(\w+)/) {    # matches (word space word)
   print "matches the regex";
   new_line;
@@ -380,7 +380,7 @@ print $string;
 new_line;
 
 # m//g finds one match after another:
-my $string = "a tonne of feathers or a tonne of bricks";
+$string = "a tonne of feathers or a tonne of bricks";
 while($string =~ m/(\w+)/g) {
   print "'".$1."'\n";
 }
@@ -388,3 +388,50 @@ while($string =~ m/(\w+)/g) {
 # s///g global match & replace, as well as returns the number of matches
 # /i - case sensitive
 # /x - allows for whitespace and comments
+
+## Modules -.pm files that can be included in other script files
+#   - needs to return 1;
+#   - needs to in perl path
+#   - use require to execute it
+#       (e.g. require Demo::StringUtils) -> Demo/StringUtils.pm
+
+## Packages
+# The golden rule with working perl packages
+#   1. Perl script (.pl) must always contain 0 package declarations.
+#   2. Perl module (.pm) must always contain exactly one package declaration,
+#       corresponding to its name and location
+
+
+## Object-Oriented Perl
+# to tell a variable what class it belongs to, use bless. What a keyword!
+# to check variable class, use ref.
+require Animal;       # don't forget to export the Animal.pm dir to your perl path
+my $animal = {
+  "legs"  => 4,
+  "color" => "white"
+};
+print ref $animal;
+bless $animal, "Animal";
+$animal->eat("curry");
+
+## Constructors:
+sub new {
+  my $class = shift @_;
+  return bless { "legs" => 4, "color" => "white"}, $class;
+}
+
+my $animal1 = Animal->new();
+
+## Inheritance
+use parent ("Animal");
+
+# can also override methods:
+sub can_eat {
+  return 1;
+}
+
+## Use of use:
+use Animal();
+# equivalent to:
+# BEGIN { require Animal(); }
+# should always be placed at the top and never inside conditionals

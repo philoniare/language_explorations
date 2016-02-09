@@ -21,3 +21,16 @@ new Promise(function(resolve) {
   console.log('third');
 });
 // If a promise is passed, it gets executed first and the value is passed over
+
+function wait(ms) {
+  console.log(this);
+  return new Promise(function(resolve) {
+    window.setTimeout(function(){
+      console.log(this);
+    }, ms);
+    console.log(this);
+    resolve();
+  });
+};
+
+wait(5);

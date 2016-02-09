@@ -17,5 +17,5 @@ if there is one available for that language.
 
 # Programming languages covered:
 - perl. Guide: http://qntm.org/files/perl/perl.html
-Files:
-  intro.pl
+- haskell. Guide: http://learnyouahaskell.com/
+- swift. Guide: https://www.hackingwithswift.com/

@@ -43,5 +43,47 @@ doubleSmallerThan100 x = (if x > 100 then x else x * 2)
 
 -- Ranges:
 --  [1..100] inclusive
---  [2,4..20] specifying ranges, this is pretty interesting syntax
---  
+--  [2,4..20] specifying ranges, this is a pretty interesting syntax
+
+-- Making infinite lists:
+--  because haskell makes use of lazy evaluation, you can specify a list
+--  as an infinite list that evaluates what is needed when it is called
+cycle([1, 3, 4]) -- would result in an infinite list
+take 10 (cycle([1, 3, 4]))
+take 10 (repeat 5)
+-- a more convenient way to do the same could be:
+replicate 3 10
+
+-- List Comprehensions in Haskell:
+[x**2 | x <- [1..10]]
+-- adding a condition:
+[x*2 | x <- [1..10], x*2 >= 12, x*2 < 18]
+
+-- Function, enters "BOOM!" if item is odd and "BANG!" if it is even
+boomBangs xs = [ if x < 10 then "BOOM!" else "BANG!" | x <- xs, odd x]
+
+-- more complex list generations:
+[x*y | x <- [2,5,10], y <- [8,10,11], x*y > 50]
+-- goes through all permutations of x and y
+
+-- elegant function for calculating length
+length xs = sum [1 | _ <- xs]
+-- wow, this is great!
+removeNonUppercase st = [ c | c <- st, c `elem` ['A'..'Z']]
+-- list comprehensions could be used to remove unnecessary characters
+-- I usually do it with regex, this alternative is very compelling!
+
+-- Working with multidimensional lists:
+let xxs = [[1,3,5,2,3,1,2,4,5],[1,2,3,4,5,6,7,8,9],[1,2,4,2,1,6,3,1,3,2,3,6]]
+[ [ x | x <- xs, even x ] | xs <- xxs]
+-- this is quite powerful, I got the same feeling when I learned
+-- metaprogramming in ruby for the first time
+
+-- Tuples
+--  have a more rigid structure than lists
+fst (7, 10) -- this is great! I like short function names!
+snd (7, 10) -- but they only work in pairs
+-- Compare with first in ruby
+
+zip [1 .. 5] ["one", "two", "three", "four", "five"]
+-- zip can very useful with traversing multiple lists simultaneously

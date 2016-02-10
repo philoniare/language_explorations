@@ -99,3 +99,7 @@ let rightTriangles = [ (a,b,c) | c <- [1..10], b <- [1..c], a <- [1..b], a^2 + b
 :t fst
 -- function type declarations are optional but are good to have
 -- because they act like pre and post condition asserts
+
+-- The declarations can be confusing at first:
+addThree :: Int -> Int -> Int -> Int
+-- basically, only the last one is the return value and others are params

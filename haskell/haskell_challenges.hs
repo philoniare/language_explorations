@@ -1,4 +1,4 @@
-f 0 = print ""
-f n =
-  print "abc"
-  f (n-1)
+-- call a function multiple times
+f _ = putStrLn "hello"
+applyN 0 _ x = x
+applyN n f x = applyN (n - 1) f (f x)

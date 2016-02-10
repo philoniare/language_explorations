@@ -48,7 +48,8 @@ doubleSmallerThan100 x = (if x > 100 then x else x * 2)
 -- Making infinite lists:
 --  because haskell makes use of lazy evaluation, you can specify a list
 --  as an infinite list that evaluates what is needed when it is called
-cycle([1, 3, 4]) -- would result in an infinite list
+cycle([1, 3, 4])
+-- would result in an infinite list
 take 10 (cycle([1, 3, 4]))
 take 10 (repeat 5)
 -- a more convenient way to do the same could be:
@@ -81,9 +82,20 @@ let xxs = [[1,3,5,2,3,1,2,4,5],[1,2,3,4,5,6,7,8,9],[1,2,4,2,1,6,3,1,3,2,3,6]]
 
 -- Tuples
 --  have a more rigid structure than lists
-fst (7, 10) -- this is great! I like short function names!
-snd (7, 10) -- but they only work in pairs
+fst (7, 10)
+-- this is great! I like short function names!
+-- but they only work in pairs
+snd (7, 10)
 -- Compare with first in ruby
 
-zip [1 .. 5] ["one", "two", "three", "four", "five"]
+zip [1 ..] ["one", "two", "three", "four", "five"]
 -- zip can very useful with traversing multiple lists simultaneously
+
+let rightTriangles = [ (a,b,c) | c <- [1..10], b <- [1..c], a <- [1..b], a^2 + b^2 == c^2]
+
+-- Types in haskell
+:t 'b'
+-- can be used to determine type signature
+:t fst
+-- function type declarations are optional but are good to have
+-- because they act like pre and post condition asserts

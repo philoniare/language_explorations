@@ -23,14 +23,70 @@ new Promise(function(resolve) {
 // If a promise is passed, it gets executed first and the value is passed over
 
 function wait(ms) {
-  console.log(this);
-  return new Promise(function(resolve) {
-    window.setTimeout(function(){
+    return new Promise(function(resolve) {    // returns a promise for chaining
       console.log(this);
-    }, ms);
-    console.log(this);
-    resolve();
+      window.setTimeout(function(){
+        resolve();
+      }, ms);
+   });
+};
+
+wait(5000);
+
+// Implementing the .ready() function in jQuery using promises
+function ready() {
+  return new Promise(function(resolve){
+    function checkLoadState() {
+      if (document.readyState !== 'loading') {
+        resolve();
+      }
+    }
+    document.addEventListener('readystatechange', checkLoadState);
+    checkLoadState(); // accounts for the case when state has already changed
   });
 };
 
-wait(5);
+// Promises template for making get requests:
+function get(url) {
+  return new Promise(function(resolve, reject){
+      var req = new XMLHttpRequest();
+      req.open('GET', url);
+      req.onload = function() {
+        if (req.status == 200) {
+          resolve(req.response);
+        } else {
+          reject(Error(req.statusText));
+        }
+      };
+      req.onerror = function() {
+        reject(Error("Network error"));
+      };
+      req.send();
+  });
+};
+
+// Sample call and chaining to handle the error
+get('url')
+  .then(function(response){
+    // get call successful, promise resolved
+  })
+  .catch(function(error){
+    // promise was rejected
+  });
+
+// Seems like the fetch API is a much better alternative for making HTTP requests
+// See: https://developers.google.com/web/updates/2015/03/introduction-to-fetch?hl=en
+// Here's a sample fetch with JSON parsing:
+function get() {
+  return fetch("http://jsonplaceholder.typicode.com/posts/1");
+};
+
+function getJSON() {
+  return get().then(function(response){
+    return response.json();
+  });
+};
+
+getJSON().then(function(response){
+  console.log(response);
+});

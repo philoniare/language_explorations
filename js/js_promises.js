@@ -1,5 +1,6 @@
 "use strict";
-
+// Udacity has a good course on promises:
+// https://www.udacity.com/course/javascript-promises--ud898
 // Promises are used to operate on deferred and asynchronous computations
 // that might involve API requests. Basically, you promise to do something
 // once some condition is fulfilled like the completion of an asynchronous
@@ -81,12 +82,32 @@ function get() {
   return fetch("http://jsonplaceholder.typicode.com/posts/1");
 };
 
+// this flow is called thenable - has then statements, can be chained
 function getJSON() {
   return get().then(function(response){
     return response.json();
   });
 };
 
-getJSON().then(function(response){
-  console.log(response);
+getJSON()
+  .then(function(response) {
+    console.log(response);
+  })
+  .catch(function(error) {
+    console.log(error);
+  });
+
+
+// Chaining promises
+// When dealing with sequences of data operated in parallel, the results
+// would end in a random order, like thread processes, which may not be
+// what we want. You could either make them run in sequence by chaining them
+// or use map to apply the function to each element, which runs in parallel.
+response.results.map(function(url){
+  getJSON(url).then(doSomething);
 });
+
+// Promise.all() can be used to return a promise when all of the promises
+// have either resolved or any one of them has been rejected
+// The previous example can be changed to:
+Promise.all(response.results.map(getJSON));

@@ -100,6 +100,34 @@ let rightTriangles = [ (a,b,c) | c <- [1..10], b <- [1..c], a <- [1..b], a^2 + b
 -- function type declarations are optional but are good to have
 -- because they act like pre and post condition asserts
 
--- The declarations can be confusing at first:
+-- The declarations can be confusing at first, but simple once you get used to it:
 addThree :: Int -> Int -> Int -> Int
--- basically, only the last one is the return value and others are params
+-- basically, only the last one is the return value and others are parameters
+-- that are passed into the function
+-- Comparable data structures are of type Ord. For example:
+:t (>)
+-- returns (>) :: (Ord a) => a -> a -> Bool
+-- similar to comparable interface in Java, you can compare them if they're of type Ord
+
+-- Members of type Show can be represented as strings
+show 555
+-- will return "555"
+read "555" + 5
+-- does the opposite operation of extracting a data from a string
+-- but the output needs to be explicitly stated or haskell should be
+-- able to derive it from the context. Otherwise, it would produce an error
+read "55.5" + 5
+-- doesn't work because it is ambiguous whether it should parse a float or int
+read "55" :: Int
+-- explicitly specifies the type, also works with arrays and tuples:
+read "[1, 2, 3]" :: [Int]
+
+-- Types also have special characteristics, like being able to use enum in ranges
+['a'..'e']
+[LT .. GT]
+-- Bounded types have minBound and maxBound
+minBound :: Int
+maxBound :: Char
+
+-- fromIntegral converts an integral to a general number type
+fromIntegral(length [1, 2, 3]) + 4.1

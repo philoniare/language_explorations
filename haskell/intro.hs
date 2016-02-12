@@ -131,3 +131,25 @@ maxBound :: Char
 
 -- fromIntegral converts an integral to a general number type
 fromIntegral(length [1, 2, 3]) + 4.1
+
+-- Syntax for declaring function types
+-- haskell allows creating different function implementations for different patterns
+-- similar to how you can create multiple constructors in other languages
+factorial :: (Integral a) => a -> a
+factorial 0 = 1
+factorial n = n * factorial (n-1)
+
+-- _ can be used to match anything:
+head' :: [a] -> a
+head' [] = error "Can't call head on empty list"
+head' (x:_) = x
+
+-- similarly, length can also be implemented as:
+length' :: (Num b) => [a] -> b
+length' [] = 0
+length' (_:xs) = 1 + length' xs
+
+-- binding patterns to names
+capital :: String -> String
+capital "" = "Empty string passed"
+capital all@(x:xs) = "First letter of " ++ all ++ " is " ++ [x]

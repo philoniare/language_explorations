@@ -153,3 +153,30 @@ length' (_:xs) = 1 + length' xs
 capital :: String -> String
 capital "" = "Empty string passed"
 capital all@(x:xs) = "First letter of " ++ all ++ " is " ++ [x]
+
+-- Guards are used to catch all cases
+bmiTell :: (RealFloat a) => a -> String
+bmiTell bmi
+  | bmi <= 18.5 = "You are underweight"
+  | bmi <= 25.0 = "You are within the normal weight range"
+  | bmi <= 30.0 = "You are a bit overweight"
+  | otherwise   = "You are quite overweight"
+
+compare :: (Ord a) => a -> a -> Ordering
+a `compare` b
+  | a > b     = GT
+  | a == b    = EQ
+  | otherwise = LT
+
+-- where clause can be added to act as an alias for common operations
+--    can also act as temporary variables
+bmiTell :: (RealFloat a) => a -> a -> String
+bmiTell weight height
+  | bmi <= skinny = "You are underweight"
+  | bmi <= normal = "You are within the normal weight range"
+  | bmi <= fat    = "You are a bit overweight"
+  | otherwise     = "You are quite overweight"
+    where bmi = weight / height ^ 2
+          skinny = 18.5
+          normal = 25.0
+          fat = 30.0

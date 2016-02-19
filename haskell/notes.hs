@@ -180,3 +180,19 @@ bmiTell weight height
           skinny = 18.5
           normal = 25.0
           fat = 30.0
+
+
+-- Let expressions, similarly bind values
+cylinder :: (RealFloat a) => a -> a -> a
+cylinder r h =
+  let sideArea  = 2 * pi * r * h
+      topArea   = pi * r ^ 2
+  in sideArea + 2 * topArea
+-- binding in let scope and they would be used inside the in statement
+-- however, unlike where, len...in are statements that could be used elsewhere
+[let square x = x * x in (square 5, square 3, square 2)]
+-- would result in: [(25, 9, 4)]
+-- multiple let statements can be separated with a semicolon or use structures
+(let (a, b, c) = (1, 2, 3) in a+b+c) * 100
+-- but because they're local to the scope being used, they can't be used
+-- in areas across guards
